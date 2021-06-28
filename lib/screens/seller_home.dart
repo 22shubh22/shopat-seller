@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shopat_seller/global/colors.dart';
 import 'package:shopat_seller/screens/add_new_product.dart';
 import 'package:shopat_seller/screens/contact_admin.dart';
+
 import 'package:shopat_seller/screens/profile.dart';
+
+import 'package:shopat_seller/screens/order_requests.dart';
+import 'package:shopat_seller/screens/your_submissions.dart';
+
 
 class SellerHome extends StatefulWidget {
   const SellerHome({Key? key}) : super(key: key);
@@ -74,65 +79,85 @@ class _SellerHomeState extends State<SellerHome> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.shopping_cart_outlined,
-                              color: Color(0XFF130F26),
-                              size: 40,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrderRequests(),
                             ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Order requests",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                          );
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.shopping_cart_outlined,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "Order requests",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.menu_rounded,
-                              color: Color(0XFF130F26),
-                              size: 40,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => YourSubmissions(),
                             ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Your submissions",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                          );
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.menu_rounded,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "Your submissions",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
