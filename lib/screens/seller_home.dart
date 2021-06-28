@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shopat_seller/global/colors.dart';
+import 'package:shopat_seller/screens/add_new_product.dart';
 import 'package:shopat_seller/screens/contact_admin.dart';
+
+import 'package:shopat_seller/screens/profile.dart';
+
 import 'package:shopat_seller/screens/order_requests.dart';
 import 'package:shopat_seller/screens/your_submissions.dart';
+
 
 class SellerHome extends StatefulWidget {
   const SellerHome({Key? key}) : super(key: key);
@@ -163,64 +168,84 @@ class _SellerHomeState extends State<SellerHome> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add_box_outlined,
-                              color: Color(0XFF130F26),
-                              size: 40,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddNewProductPage(),
                             ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Submit a product",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                          );
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add_box_outlined,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "Submit a product",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.home_outlined,
-                              color: Color(0XFF130F26),
-                              size: 40,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(),
                             ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Inventory",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                          );
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person_outline,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "Your Profile",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -231,36 +256,6 @@ class _SellerHomeState extends State<SellerHome> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.person_outline,
-                              color: Color(0XFF130F26),
-                              size: 40,
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Your Profile",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -301,6 +296,10 @@ class _SellerHomeState extends State<SellerHome> {
                           ),
                         ),
                       ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.17,
+                        width: MediaQuery.of(context).size.width * 0.40,
+                      )
                     ],
                   )
                 ],
