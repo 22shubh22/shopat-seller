@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopat_seller/global/colors.dart';
 import 'package:shopat_seller/screens/add_new_product.dart';
@@ -6,8 +7,8 @@ import 'package:shopat_seller/screens/contact_admin.dart';
 import 'package:shopat_seller/screens/profile.dart';
 
 import 'package:shopat_seller/screens/order_requests.dart';
+import 'package:shopat_seller/screens/seller_login.dart';
 import 'package:shopat_seller/screens/your_submissions.dart';
-
 
 class SellerHome extends StatefulWidget {
   const SellerHome({Key? key}) : super(key: key);
@@ -59,7 +60,18 @@ class _SellerHomeState extends State<SellerHome> {
                       ],
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        FirebaseAuth.instance.signOut();
+                        while (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SellerLogin(),
+                          ),
+                        );
+                      },
                       child: Container(
                         child: Icon(
                           Icons.logout_outlined,

@@ -36,6 +36,7 @@ dependencies:
   firebase_core: 
   firebase_storage: 
   firebase_auth: 
+  url_launcher: ^6.0.7
 
 dev_dependencies:
   flutter_test:

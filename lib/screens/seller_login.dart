@@ -29,7 +29,7 @@ class _SellerLoginState extends State<SellerLogin> {
     super.initState();
     AuthService().isUserLoggedIn();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +115,6 @@ class _SellerLoginState extends State<SellerLogin> {
                     : InkWell(
                         onTap: () async {
                           if (_phoneCont.text.trim().length == 10) {
-                            BotToast.showText(text: "Nice mobile number");
                             print("I am here00");
                             setState(() {
                               _isOtpSending = true;
@@ -315,7 +314,4 @@ class _SellerLoginState extends State<SellerLogin> {
         codeSent: codeSent,
         codeAutoRetrievalTimeout: autoTimeout);
   }
-
 }
-
-
