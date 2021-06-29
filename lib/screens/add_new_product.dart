@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tagging/flutter_tagging.dart';
 import 'package:shopat_seller/firebase_repository/auth.dart';
 import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
 import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
@@ -21,6 +22,21 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
   TextEditingController _quantity = TextEditingController();
 
   bool _isSubmitLoading = false;
+  String _selectedValuesJson = 'Nothing to show';
+  late final List<Tag> _selectedTags;
+  late List<String> _tagsListGoingtToDb = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTags = [];
+  }
+
+  @override
+  void dispose() {
+    _selectedTags.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -300,6 +316,70 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                       SizedBox(
                         height: 24.0,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FlutterTagging<Tag>(
+                          initialItems: _selectedTags,
+                          textFieldConfiguration: TextFieldConfiguration(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              filled: true,
+                              fillColor: Colors.green.withAlpha(30),
+                              hintText: 'Add Tags',
+                              labelText: 'Add Tags',
+                            ),
+                          ),
+                          findSuggestions: TagService.getTags,
+                          additionCallback: (value) {
+                            return Tag(
+                              name: value,
+                            );
+                          },
+                          onAdded: (language) {
+                            // api calls here, triggered when add to tag button is pressed
+                            return language;
+                          },
+                          configureSuggestion: (tag) {
+                            return SuggestionConfiguration(
+                              title: Text(tag.name),
+                              additionWidget: Chip(
+                                avatar: Icon(
+                                  Icons.add_circle,
+                                  color: Colors.white,
+                                ),
+                                label: Text('Add New Tag'),
+                                labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                          },
+                          configureChip: (lang) {
+                            return ChipConfiguration(
+                              label: Text(lang.name),
+                              backgroundColor: Colors.green,
+                              labelStyle: TextStyle(color: Colors.white),
+                              deleteIconColor: Colors.white,
+                            );
+                          },
+                          onChanged: () {
+                            setState(() {
+                              _selectedValuesJson = _selectedTags
+                                  .map<String>((lang) => '\n${lang.toJson()}')
+                                  .toList()
+                                  .toString();
+                              _selectedValuesJson = _selectedValuesJson
+                                  .replaceFirst('}]', '}\n]');
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
                       Center(
                         child: InkWell(
                           onTap: () async {
@@ -307,6 +387,9 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                               setState(() {
                                 _isSubmitLoading = true;
                               });
+                              for (var i in _selectedTags) {
+                                _tagsListGoingtToDb.add(i.name);
+                              }
                               if (_name.text.length > 0 &&
                                   _desc1.text.length > 0 &&
                                   _desc2.text.length > 0 &&
@@ -325,7 +408,7 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                                       int.parse(_price.text),
                                       0,
                                       int.parse(_quantity.text),
-                                      [],
+                                      _tagsListGoingtToDb,
                                       AuthService().getPhoneNumber() ?? ""),
                                 );
                                 if (result['res'] == true) {
@@ -342,7 +425,7 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 15),
-                            width: MediaQuery.of(context).size.width * 0.25,
+                            width: MediaQuery.of(context).size.width * 0.40,
                             height: 50.0,
                             decoration: BoxDecoration(
                               color: AppColors.accentColor,
@@ -374,6 +457,9 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
                     ],
                   ),
                 ),
@@ -384,4 +470,37 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
       ),
     );
   }
+}
+
+class TagService {
+  /// Mocks fetching language from network API with delay of 500ms.
+  static Future<List<Tag>> getTags(String query) async {
+    await Future.delayed(Duration(milliseconds: 500), null);
+    return <Tag>[
+      Tag(name: 'Tag One'),
+      Tag(name: 'Tag Two'),
+      Tag(name: 'Tag Three'),
+      Tag(name: 'Tag Four'),
+    ]
+        .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
+}
+
+class Tag extends Taggable {
+  ///
+  final String name;
+
+  /// Creates Language
+  Tag({
+    required this.name,
+  });
+
+  @override
+  List<Object> get props => [name];
+
+  /// Converts the class to json string.
+  String toJson() => '''  {
+    "name": $name,
+  }''';
 }
