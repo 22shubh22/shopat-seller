@@ -1,6 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopat_seller/firebase_repository/auth.dart';
+import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
 import 'package:shopat_seller/global/colors.dart';
 import 'package:shopat_seller/screens/seller_home.dart';
 import 'package:shopat_seller/widgets/black_oval_button.dart';
@@ -20,6 +23,13 @@ class _SellerLoginState extends State<SellerLogin> {
   bool codeSent = false;
   bool _isOtpSending = false;
   bool _isLoginLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AuthService().isUserLoggedIn();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,6 +116,15 @@ class _SellerLoginState extends State<SellerLogin> {
                         onTap: () async {
                           if (_phoneCont.text.trim().length == 10) {
                             BotToast.showText(text: "Nice mobile number");
+                            print("I am here00");
+                            setState(() {
+                              _isOtpSending = true;
+                            });
+                            await verifyPhone("+91" + _phoneCont.text);
+                            print("I am here00");
+                            setState(() {
+                              _isOtpSending = false;
+                            });
                           } else {
                             BotToast.showText(
                                 text: "Mobile number should be 10 digits");
@@ -208,7 +227,36 @@ class _SellerLoginState extends State<SellerLogin> {
                             ),
                           ],
                         ),
-                        onPressedAction: () async {},
+                        onPressedAction: () async {
+                          setState(() {
+                            _isLoginLoading = true;
+                          });
+                          try {
+                            await FirebaseAuth.instance
+                                .signInWithCredential(
+                                    PhoneAuthProvider.credential(
+                              verificationId: verificationId,
+                              smsCode: _passwordCont.text.trim(),
+                            ))
+                                .then((value) async {
+                              if (value.user != null) {
+                                await FirestoreService().getUserByPhone(
+                                    "+91" + _phoneCont.text,
+                                    AuthService().getUserId());
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SellerHome()),
+                                    (route) => false);
+                              }
+                            });
+                          } catch (e) {
+                            BotToast.showText(text: "Invalid OTP");
+                          }
+                          setState(() {
+                            _isLoginLoading = false;
+                          });
+                        },
                       )
                 : Container(),
             SizedBox(
@@ -234,4 +282,40 @@ class _SellerLoginState extends State<SellerLogin> {
       ),
     );
   }
+
+  Future<void> verifyPhone(phoneNo) async {
+    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+      AuthService().signIn(authResult);
+    };
+
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException authException) {
+      print('${authException.message}');
+      BotToast.showText(text: '${authException.message}');
+    };
+
+    final PhoneCodeSent codeSent = (String verId, int? forceResend) {
+      setState(() {
+        this.codeSent = true;
+        verificationId = verId;
+      });
+      BotToast.showText(text: "OTP sent succesfully");
+    };
+
+    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+      setState(() {
+        verificationId = verId;
+      });
+    };
+    print(phoneNo);
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        verificationCompleted: verified,
+        verificationFailed: verificationFailed,
+        codeSent: codeSent,
+        codeAutoRetrievalTimeout: autoTimeout);
+  }
+
 }
+
+

@@ -1,11 +1,16 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shopat_seller/global/colors.dart';
+import 'package:shopat_seller/screens/seller_home.dart';
 import 'package:shopat_seller/screens/seller_login.dart';
 
-void main() {
+import 'firebase_repository/auth.dart';
+
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: AppColors.primaryColor,
@@ -29,7 +34,8 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         BotToastNavigatorObserver()
       ], //2. registered route observer
-      home: SellerLogin(),
+      //home: SellerLogin(),
+      home: AuthService().getUserId() != null ? SellerHome() : SellerLogin(),
     );
   }
 }

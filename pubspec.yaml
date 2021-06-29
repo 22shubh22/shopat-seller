@@ -32,6 +32,10 @@ dependencies:
   bot_toast: ^4.0.0
   intl: ^0.17.0
   feather_icons: ^1.1.0-nullsafety.0
+  cloud_firestore:  
+  firebase_core: 
+  firebase_storage: 
+  firebase_auth: 
 
 dev_dependencies:
   flutter_test:
