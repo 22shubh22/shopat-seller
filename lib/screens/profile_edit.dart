@@ -1,15 +1,40 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
 import 'package:shopat_seller/global/colors.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  ProfileEditPage({Key? key}) : super(key: key);
+  final String name, sellerNumber, shopName, shopAddress;
+  ProfileEditPage({
+    Key? key,
+    required this.name,
+    required this.sellerNumber,
+    required this.shopName,
+    required this.shopAddress,
+  }) : super(key: key);
 
   @override
   _ProfileEditPageState createState() => _ProfileEditPageState();
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _sellerNumberController = TextEditingController();
+  final TextEditingController _shopNameController = TextEditingController();
+  final TextEditingController _shopAddressController = TextEditingController();
+
+  bool _isUpdating = false;
+
+  @override
+  void initState() {
+    _nameController.text = widget.name;
+    _sellerNumberController.text = widget.sellerNumber;
+    _shopNameController.text = widget.shopName;
+    _shopAddressController.text = widget.shopAddress;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +105,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           ),
                         ),
                       ),
+                      controller: _nameController,
                     ),
                     SizedBox(
                       height: 16.0,
@@ -87,7 +113,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text(
-                        "Phone Number(This can’t be changed)",
+                        "Phone Number (This can’t be changed)",
                         style: TextStyle(
                           fontFamily: "Poppins",
                           fontSize: 14.0,
@@ -120,6 +146,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           ),
                         ),
                       ),
+                      controller: _sellerNumberController,
+                      readOnly: true,
                     ),
                     SizedBox(
                       height: 16.0,
@@ -160,6 +188,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           ),
                         ),
                       ),
+                      controller: _shopNameController,
                     ),
                     SizedBox(
                       height: 16.0,
@@ -200,16 +229,37 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           ),
                         ),
                       ),
+                      controller: _shopAddressController,
                     ),
                     SizedBox(
                       height: 24.0,
                     ),
                     Center(
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          if (_nameController.text.length > 0 &&
+                              _shopNameController.text.length > 0 &&
+                              _shopAddressController.text.length > 0) {
+                            setState(() {
+                              _isUpdating = true;
+                            });
+                            await FirestoreService().updateProfileDetails(
+                              name: _nameController.text,
+                              shopName: _shopNameController.text,
+                              shopAddress: _shopAddressController.text,
+                            );
+                            setState(() {
+                              _isUpdating = false;
+                            });
+                            Navigator.of(context).pop('success');
+                          } else {
+                            BotToast.showText(
+                                text: "Please enter all the details");
+                          }
+                        },
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 15),
-                          width: MediaQuery.of(context).size.width * 0.25,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           height: 50.0,
                           decoration: BoxDecoration(
                             color: AppColors.accentColor,
@@ -219,13 +269,21 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text(
-                                  "Update",
-                                  style: TextStyle(
-                                    fontFamily: "Poppins",
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                _isUpdating
+                                    ? Text(
+                                        "Updating ....",
+                                        style: TextStyle(
+                                          fontFamily: "Poppins",
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text(
+                                        "Update",
+                                        style: TextStyle(
+                                          fontFamily: "Poppins",
+                                          color: Colors.white,
+                                        ),
+                                      ),
                               ],
                             ),
                           ),

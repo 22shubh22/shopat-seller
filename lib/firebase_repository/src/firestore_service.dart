@@ -13,7 +13,8 @@ class FirestoreService {
       await _instance.collection('sellers').doc(phoneNumber).set({
         'sellerNumber': phoneNumber,
         'uid': uid,
-        'address': "",
+        'shopAddress': "",
+        'shopName': "",
         'name': "",
         'productSubmitted': [],
         'productsRequested': []
@@ -21,6 +22,43 @@ class FirestoreService {
     } else {
       print(
           "User with phone number $phoneNumber already exists. Just logging in");
+    }
+  }
+
+  getProfileDetails() async {
+    String phoneNumber = AuthService().getPhoneNumber() ?? "";
+    var data = await _instance.collection('sellers').doc(phoneNumber).get();
+    String name = data.data()?['name'];
+    String sellerNumber = data.data()?['sellerNumber'];
+    String shopName = data.data()?['shopName'];
+    String shopAddress = data.data()?['shopAddress'];
+    return {
+      'name': name,
+      'sellerNumber': sellerNumber,
+      'shopName': shopName,
+      'shopAddress': shopAddress,
+    };
+  }
+
+  updateProfileDetails({
+    required String name,
+    required String shopName,
+    required String shopAddress,
+  }) async {
+    String phoneNumber = AuthService().getPhoneNumber() ?? "";
+    try {
+      await _instance.collection('sellers').doc(phoneNumber).update({
+        'name': name,
+        'shopName': shopName,
+        'shopAddress': shopAddress,
+      });
+      print("Profile details updated");
+
+      BotToast.showText(text: "Profile details updated");
+    } catch (e) {
+      print("error while updating profile : $e");
+
+      BotToast.showText(text: "Cannot update your details");
     }
   }
 }

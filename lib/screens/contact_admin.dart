@@ -1,5 +1,7 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:shopat_seller/global/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactAdmin extends StatefulWidget {
   const ContactAdmin({Key? key}) : super(key: key);
@@ -9,6 +11,7 @@ class ContactAdmin extends StatefulWidget {
 }
 
 class _ContactAdminState extends State<ContactAdmin> {
+  String mobile = "9032134375";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +69,7 @@ class _ContactAdminState extends State<ContactAdmin> {
                   Container(
                     alignment: Alignment.center,
                     child: Text(
-                      '+91 9639891011',
+                      '+91 $mobile',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: "Poppins",
@@ -79,66 +82,80 @@ class _ContactAdminState extends State<ContactAdmin> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.phone_outlined,
-                              color: Color(0XFF130F26),
-                              size: 40,
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "Call",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                      InkWell(
+                        onTap: () {
+                          launch("tel:$mobile");
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.phone_outlined,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "Call",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.whatshot_sharp,
-                              color: Color(0XFF130F26),
-                              size: 40,
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                            Text(
-                              "WhatsApp",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: "Poppins",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
+                      InkWell(
+                        onTap: () async {
+                          var whatsappUrl = "whatsapp://send?phone=+91$mobile";
+                          await canLaunch(whatsappUrl)
+                              ? launch(whatsappUrl)
+                              : BotToast.showText(
+                                  text: "Whatsapp not installed in the device");
+                        },
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width * 0.40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.whatshot_sharp,
+                                color: Color(0XFF130F26),
+                                size: 40,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                "WhatsApp",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
