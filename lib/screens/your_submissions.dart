@@ -1,8 +1,10 @@
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
 import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
 import 'package:shopat_seller/global/colors.dart';
+import 'package:shopat_seller/screens/edit_product.dart';
 import 'package:shopat_seller/screens/submission_status.dart';
 import 'package:shopat_seller/widgets/chip.dart';
 
@@ -210,85 +212,167 @@ class _YourSubmissionsState extends State<YourSubmissions> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "${item.productName}",
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                "Poppins",
-                                                            fontSize: 18.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 6.0),
-                                                        // Text(
-                                                        //   "Description One",
-                                                        //   maxLines: 2,
-                                                        //   overflow:
-                                                        //       TextOverflow.ellipsis,
-                                                        //   style: TextStyle(
-                                                        //     fontFamily: "Poppins",
-                                                        //     fontSize: 14.0,
-                                                        //     color: Colors.grey[400],
-                                                        //   ),
-                                                        // ),
-                                                        // SizedBox(height: 4.0),
-                                                        // Text(
-                                                        //   "Description Two",
-                                                        //   maxLines: 1,
-                                                        //   overflow:
-                                                        //       TextOverflow.ellipsis,
-                                                        //   style: TextStyle(
-                                                        //     fontFamily: "Poppins",
-                                                        //     fontSize: 14.0,
-                                                        //     color: Colors.grey[400],
-                                                        //   ),
-                                                        // ),
-                                                        Text(
-                                                          DateFormat("yMMMd")
-                                                              .format(DateTime
-                                                                  .parse(item
-                                                                      .createdAt)),
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                "Poppins",
-                                                            fontSize: 14.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.60),
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 6.0),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "₹ " +
-                                                                  "${item.costPrice}/-",
-                                                              style: TextStyle(
-                                                                fontFamily:
-                                                                    "Poppins",
-                                                                fontSize: 16.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
+                                                    Expanded(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "${item.productName}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      "Poppins",
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                                width: 48.0),
-                                                            Text(
+                                                              SizedBox(
+                                                                  height: 6.0),
+                                                              // Text(
+                                                              //   "Description One",
+                                                              //   maxLines: 2,
+                                                              //   overflow:
+                                                              //       TextOverflow.ellipsis,
+                                                              //   style: TextStyle(
+                                                              //     fontFamily: "Poppins",
+                                                              //     fontSize: 14.0,
+                                                              //     color: Colors.grey[400],
+                                                              //   ),
+                                                              // ),
+                                                              // SizedBox(height: 4.0),
+                                                              // Text(
+                                                              //   "Description Two",
+                                                              //   maxLines: 1,
+                                                              //   overflow:
+                                                              //       TextOverflow.ellipsis,
+                                                              //   style: TextStyle(
+                                                              //     fontFamily: "Poppins",
+                                                              //     fontSize: 14.0,
+                                                              //     color: Colors.grey[400],
+                                                              //   ),
+                                                              // ),
+                                                              Text(
+                                                                DateFormat(
+                                                                        "yMMMd")
+                                                                    .format(DateTime
+                                                                        .parse(item
+                                                                            .createdAt)),
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      "Poppins",
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.60),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 6.0),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    "₹ " +
+                                                                        "${item.costPrice}/-",
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontFamily:
+                                                                          "Poppins",
+                                                                      fontSize:
+                                                                          16.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              item.status ==
+                                                                      "Accepted"
+                                                                  ? Container(
+                                                                      height:
+                                                                          36.0,
+                                                                      width:
+                                                                          36.0,
+                                                                    )
+                                                                  : InkWell(
+                                                                      onTap:
+                                                                          () async {
+                                                                        var res =
+                                                                            await Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                EditProductPage(product: item),
+                                                                          ),
+                                                                        );
+                                                                        if (res ==
+                                                                            'success') {
+                                                                          getYourSubmissions();
+                                                                        }
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            36.0,
+                                                                        height:
+                                                                            36.0,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              AppColors.accentColor,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30),
+                                                                        ),
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              Icon(
+                                                                            FeatherIcons.edit3,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                16.0,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                              SizedBox(
+                                                                height: 12.0,
+                                                              ),
+                                                              Text(
                                                                 "${item.status}",
                                                                 style:
                                                                     TextStyle(
@@ -305,10 +389,12 @@ class _YourSubmissionsState extends State<YourSubmissions> {
                                                                           0XFF10C600)
                                                                       : Color(
                                                                           0XFFFF8413),
-                                                                )),
-                                                          ],
-                                                        )
-                                                      ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

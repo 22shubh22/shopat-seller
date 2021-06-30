@@ -60,237 +60,240 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               ],
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 18.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        "Name",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 18.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "Name",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF393D46),
+                          ),
                         ),
                       ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Please Enter your name",
-                        hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46).withOpacity(0.60),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
+                      TextField(
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          hintText: "Please Enter your name",
+                          hintStyle: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFF393D46).withOpacity(0.60),
                           ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.60),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.15),
+                            ),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Color(0xFF393D46).withOpacity(0.15),
+                        controller: _nameController,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "Phone Number (This can’t be changed)",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF393D46),
                           ),
                         ),
                       ),
-                      controller: _nameController,
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        "Phone Number (This can’t be changed)",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46),
-                        ),
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "+91 9634891011",
-                        hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46).withOpacity(0.60),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
+                      TextField(
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          hintText: "+91 9634891011",
+                          hintStyle: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFF393D46).withOpacity(0.60),
                           ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.60),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.15),
+                            ),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Color(0xFF393D46).withOpacity(0.15),
+                        controller: _sellerNumberController,
+                        readOnly: true,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "Shop Name",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF393D46),
                           ),
                         ),
                       ),
-                      controller: _sellerNumberController,
-                      readOnly: true,
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        "Shop Name",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46),
-                        ),
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Enter name of your Shop",
-                        hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46).withOpacity(0.60),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
+                      TextField(
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          hintText: "Enter name of your Shop",
+                          hintStyle: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFF393D46).withOpacity(0.60),
                           ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.60),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.15),
+                            ),
+                          ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Color(0xFF393D46).withOpacity(0.15),
+                        controller: _shopNameController,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "Shop Address",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF393D46),
                           ),
                         ),
                       ),
-                      controller: _shopNameController,
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
-                      child: Text(
-                        "Shop Address",
-                        style: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46),
-                        ),
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Enter Address of your Shop",
-                        hintStyle: TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF393D46).withOpacity(0.60),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
+                      TextField(
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          hintText: "Enter Address of your Shop",
+                          hintStyle: TextStyle(
+                            fontFamily: "Poppins",
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400,
                             color: Color(0xFF393D46).withOpacity(0.60),
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(
-                            color: Color(0xFF393D46).withOpacity(0.15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.60),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(
+                              color: Color(0xFF393D46).withOpacity(0.15),
+                            ),
                           ),
                         ),
+                        controller: _shopAddressController,
                       ),
-                      controller: _shopAddressController,
-                    ),
-                    SizedBox(
-                      height: 24.0,
-                    ),
-                    Center(
-                      child: InkWell(
-                        onTap: () async {
-                          if (_nameController.text.length > 0 &&
-                              _shopNameController.text.length > 0 &&
-                              _shopAddressController.text.length > 0) {
-                            setState(() {
-                              _isUpdating = true;
-                            });
-                            await FirestoreService().updateProfileDetails(
-                              name: _nameController.text,
-                              shopName: _shopNameController.text,
-                              shopAddress: _shopAddressController.text,
-                            );
-                            setState(() {
-                              _isUpdating = false;
-                            });
-                            Navigator.of(context).pop('success');
-                          } else {
-                            BotToast.showText(
-                                text: "Please enter all the details");
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          width: MediaQuery.of(context).size.width * 0.40,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                            color: AppColors.accentColor,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                _isUpdating
-                                    ? Text(
-                                        "Updating ....",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins",
-                                          color: Colors.white,
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      Center(
+                        child: InkWell(
+                          onTap: () async {
+                            if (_nameController.text.length > 0 &&
+                                _shopNameController.text.length > 0 &&
+                                _shopAddressController.text.length > 0) {
+                              setState(() {
+                                _isUpdating = true;
+                              });
+                              await FirestoreService().updateProfileDetails(
+                                name: _nameController.text,
+                                shopName: _shopNameController.text,
+                                shopAddress: _shopAddressController.text,
+                              );
+                              setState(() {
+                                _isUpdating = false;
+                              });
+                              Navigator.of(context).pop('success');
+                            } else {
+                              BotToast.showText(
+                                  text: "Please enter all the details");
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            width: MediaQuery.of(context).size.width * 0.40,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color: AppColors.accentColor,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _isUpdating
+                                      ? Text(
+                                          "Updating ....",
+                                          style: TextStyle(
+                                            fontFamily: "Poppins",
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : Text(
+                                          "Update",
+                                          style: TextStyle(
+                                            fontFamily: "Poppins",
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      )
-                                    : Text(
-                                        "Update",
-                                        style: TextStyle(
-                                          fontFamily: "Poppins",
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

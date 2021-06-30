@@ -72,28 +72,45 @@ class FirestoreService {
     required ProductEntity product,
   }) async {
     try {
-      String phoneNumber = AuthService().getPhoneNumber() ?? "";
       var res = await _instance.collection("products").add(
             product.toJson(),
           );
       print(" firestore res: ${res.path}");
-      var userData =
-          await _instance.collection("sellers").doc(phoneNumber).get();
-      List submittedProducts = [];
-      if (userData.data()?['productSubmitted'] != null) {
-        submittedProducts = userData.data()?['productSubmitted'];
-      }
 
-      submittedProducts.add(res.path.substring(9));
-      await _instance.collection("sellers").doc(phoneNumber).update(
-        {"productSubmitted": submittedProducts},
-      );
+      try {
+        await _instance
+            .collection("products")
+            .doc(res.path.substring(9))
+            .update(
+          {"id": "${res.path.substring(9)}"},
+        );
+      } catch (e) {
+        print(" id update error: $e");
+      }
       BotToast.showText(text: 'Product Submitted');
       return {'res': true, 'message': 'Product Submitted'};
     } catch (e) {
       print(" error while submitting the product: $e");
       BotToast.showText(text: 'Cannot submit the product');
       return {'res': false, 'message': 'Cannot submit the product'};
+    }
+  }
+
+  editProduct({
+    required ProductEntity product,
+  }) async {
+    try {
+      await _instance
+          .collection("products")
+          .doc(product.id)
+          .update(product.toJson());
+
+      BotToast.showText(text: 'Product Updated');
+      return {'res': true, 'message': 'Product Updated'};
+    } catch (e) {
+      print(" error while Updating the product: $e");
+      BotToast.showText(text: 'Cannot update the product');
+      return {'res': false, 'message': 'Cannot update the product'};
     }
   }
 
