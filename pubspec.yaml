@@ -34,10 +34,12 @@ dependencies:
   feather_icons: ^1.1.0-nullsafety.0
   cloud_firestore:  
   firebase_core: 
-  firebase_storage: 
+  firebase_storage: ^8.1.3 
   firebase_auth: 
+  firebase_analytics:  
   url_launcher: ^6.0.7
   flutter_tagging: ^3.0.0
+  image_picker: ^0.8.1+2
 
 dev_dependencies:
   flutter_test:

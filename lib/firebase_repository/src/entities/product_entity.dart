@@ -15,6 +15,8 @@ class ProductEntity {
   final int quantityAvailable;
   final String shopNumber;
   final List tags;
+  final String createdAt;
+  final String status;
 
   ProductEntity(
     this.id,
@@ -28,6 +30,8 @@ class ProductEntity {
     this.quantityAvailable,
     this.tags,
     this.shopNumber,
+    this.createdAt,
+    this.status,
   );
 
   Map<String, Object> toJson() {
@@ -42,11 +46,13 @@ class ProductEntity {
       "sellingPrice": sellingPrice,
       "quantityAvailable": quantityAvailable,
       "shopNumber": shopNumber,
-      "tags": tags
+      "tags": tags,
+      "createdAt": createdAt,
+      "status": status,
     };
   }
 
-  static ProductEntity fromJson(Map<String, Object> json) {
+  static ProductEntity fromJson(Map<String, dynamic> json) {
     return ProductEntity(
       json["id"] as String,
       json["productName"] as String,
@@ -59,6 +65,8 @@ class ProductEntity {
       json["quantityAvailable"] as int,
       json["tags"] as List,
       json["shopNumber"] as String,
+      json["createdAt"] as String,
+      json["status"] as String,
     );
   }
 
@@ -75,6 +83,8 @@ class ProductEntity {
       (snap.data() as dynamic)['quantityAvailable'],
       (snap.data() as dynamic)['tags'],
       (snap.data() as dynamic)['shopNumber'],
+      (snap.data() as dynamic)['createdAt'],
+      (snap.data() as dynamic)['status'],
     );
   }
 
@@ -90,7 +100,9 @@ class ProductEntity {
       "sellingPrice": sellingPrice,
       "quantityAvailable": quantityAvailable,
       "shopNumber": shopNumber,
-      "tags": tags
+      "tags": tags,
+      "createdAt": createdAt,
+      "status": status
     };
   }
 }

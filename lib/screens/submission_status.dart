@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
 import 'package:shopat_seller/global/colors.dart';
 
 class SubmissionStatus extends StatefulWidget {
-  const SubmissionStatus({Key? key}) : super(key: key);
+  final ProductEntity productEntity;
+
+  const SubmissionStatus({
+    Key? key,
+    required this.productEntity,
+  }) : super(key: key);
 
   @override
   _SubmissionStatusState createState() => _SubmissionStatusState();
@@ -35,7 +41,7 @@ class _SubmissionStatusState extends State<SubmissionStatus> {
                             ),
                             child: Image.network(
                               // product.image should rome here.
-                              "https://firebasestorage.googleapis.com/v0/b/shopat-8fe6c.appspot.com/o/cotton-saree.jpg?alt=media&token=6c74071c-e9ce-46e0-8b43-49a1df51468d",
+                              "${widget.productEntity.image}",
                               height: MediaQuery.of(context).size.height * 0.45,
                               width: double.infinity,
                               fit: BoxFit.contain,
@@ -53,7 +59,7 @@ class _SubmissionStatusState extends State<SubmissionStatus> {
                                   child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      "Frock 9 year cotton",
+                                      "${widget.productEntity.productName}",
                                       style: TextStyle(
                                         fontFamily: "Poppins",
                                         fontSize: 28.0,
@@ -70,7 +76,7 @@ class _SubmissionStatusState extends State<SubmissionStatus> {
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "Product description comes here",
+                                  "${widget.productEntity.description1} \n${widget.productEntity.description2}",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     fontSize: 16.0,
@@ -92,7 +98,7 @@ class _SubmissionStatusState extends State<SubmissionStatus> {
                                 ),
                               ),
                               trailing: Text(
-                                "₹ 5250/-",
+                                "₹ ${widget.productEntity.costPrice}/-",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
                                   color: Color(0XFF393D46),
@@ -104,10 +110,15 @@ class _SubmissionStatusState extends State<SubmissionStatus> {
                             Divider(color: Colors.grey),
                             ListTile(
                               title: Text(
-                                "Approved by Admin",
+                                widget.productEntity.status == "Pending"
+                                    ? "Not yet approved by Admin"
+                                    : "Approved by Admin",
                                 style: TextStyle(
                                   fontFamily: "Poppins",
-                                  color: Color(0XFF10C600),
+                                  color:
+                                      widget.productEntity.status == "Pending"
+                                          ? Color(0XFFFF8413)
+                                          : Color(0XFF10C600),
                                   fontWeight: FontWeight.w400,
                                   fontSize: 18.0,
                                 ),

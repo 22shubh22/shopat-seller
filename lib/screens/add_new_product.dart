@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tagging/flutter_tagging.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shopat_seller/firebase_repository/auth.dart';
 import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
 import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
@@ -25,6 +28,18 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
   String _selectedValuesJson = 'Nothing to show';
   late final List<Tag> _selectedTags;
   late List<String> _tagsListGoingtToDb = [];
+  File _imageFile = File("");
+
+  final picker = ImagePicker();
+
+  Future pickImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _imageFile = File(pickedFile!.path);
+      print("Path: ${pickedFile.path}");
+    });
+  }
 
   @override
   void initState() {
@@ -273,43 +288,56 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             child: Container(
-                              child: Image.network(
-                                "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-                                height: 120.0,
-                                width: 120.0,
-                                fit: BoxFit.cover,
-                              ),
+                              child: _imageFile.path == ""
+                                  ? Image.network(
+                                      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+                                      height: 120.0,
+                                      width: 120.0,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.file(
+                                      _imageFile,
+                                      height: 120.0,
+                                      width: 120.0,
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                           SizedBox(
                             width: 16.0,
                           ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Container(
-                                height: 120.0,
-                                width: 120.0,
-                                color: Colors.white,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(FeatherIcons.image),
-                                    SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Text(
-                                      "Upload a picture",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: "Poppins",
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFF393D46),
+                          InkWell(
+                            onTap: () async {
+                              await pickImage();
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Container(
+                                  height: 120.0,
+                                  width: 120.0,
+                                  color: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(FeatherIcons.image),
+                                      SizedBox(
+                                        height: 8.0,
                                       ),
-                                    ),
-                                  ],
-                                )),
+                                      Text(
+                                        "Upload a picture",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: "Poppins",
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xFF393D46),
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            ),
                           ),
                         ],
                       ),
@@ -396,21 +424,34 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                                   _price.text.length > 0 &&
                                   _quantity.text.length > 0 &&
                                   int.parse(_quantity.text) <= 20) {
+                                String imageUrl = "";
+                                if (_imageFile.path.length > 1) {
+                                  imageUrl =
+                                      await FirestoreService().uploadImage(
+                                    file: _imageFile,
+                                  );
+                                } else {
+                                  imageUrl =
+                                      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+                                }
+
                                 var result =
                                     await FirestoreService().submitNewProduct(
                                   product: ProductEntity(
-                                      "",
-                                      _name.text,
-                                      AuthService().getUserId() ?? "",
-                                      _desc1.text,
-                                      _desc2.text,
-                                      // TODO: image upload feature
-                                      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-                                      int.parse(_price.text),
-                                      0,
-                                      int.parse(_quantity.text),
-                                      _tagsListGoingtToDb,
-                                      AuthService().getPhoneNumber() ?? ""),
+                                    "",
+                                    _name.text,
+                                    AuthService().getUserId() ?? "",
+                                    _desc1.text,
+                                    _desc2.text,
+                                    imageUrl,
+                                    int.parse(_price.text),
+                                    0,
+                                    int.parse(_quantity.text),
+                                    _tagsListGoingtToDb,
+                                    AuthService().getPhoneNumber() ?? "",
+                                    DateTime.now().toString(),
+                                    "Pending",
+                                  ),
                                 );
                                 if (result['res'] == true) {
                                   Navigator.pop(context);

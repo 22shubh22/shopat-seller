@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shopat_seller/firebase_repository/auth.dart';
 import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
+import 'package:path/path.dart';
 
 class FirestoreService {
   //firestore instance to user multiple times.
   FirebaseFirestore _instance = FirebaseFirestore.instance;
+  FirebaseStorage _storage = FirebaseStorage.instance;
 
   getUserByPhone(String phoneNumber, String? uid) async {
     var s = await _instance.collection('sellers').doc(phoneNumber).get();
@@ -63,7 +68,9 @@ class FirestoreService {
     }
   }
 
-  submitNewProduct({required ProductEntity product}) async {
+  submitNewProduct({
+    required ProductEntity product,
+  }) async {
     try {
       String phoneNumber = AuthService().getPhoneNumber() ?? "";
       var res = await _instance.collection("products").add(
@@ -77,7 +84,7 @@ class FirestoreService {
         submittedProducts = userData.data()?['productSubmitted'];
       }
 
-      submittedProducts.add(res.path.substring(15));
+      submittedProducts.add(res.path.substring(9));
       await _instance.collection("sellers").doc(phoneNumber).update(
         {"productSubmitted": submittedProducts},
       );
@@ -88,5 +95,35 @@ class FirestoreService {
       BotToast.showText(text: 'Cannot submit the product');
       return {'res': false, 'message': 'Cannot submit the product'};
     }
+  }
+
+  Future<String> uploadImage({
+    required File file,
+  }) async {
+    try {
+      String fileName = basename(file.path);
+      Reference reference = _storage.ref().child("productImages/$fileName");
+      UploadTask uploadTask = reference.putFile(file);
+      String imageUrl =
+          await uploadTask.then((res) async => res.ref.getDownloadURL());
+      print(imageUrl);
+      return imageUrl;
+    } catch (e) {
+      return "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+    }
+  }
+
+  Future<List<ProductEntity>> getYourSubmissions() async {
+    String uid = AuthService().getUserId() ?? "";
+    List<ProductEntity> productsList = [];
+    var products = await _instance.collection('products').get();
+
+    for (var i in products.docs) {
+      var data = i.data();
+      if (i['shopId'] == uid) {
+        productsList.add(ProductEntity.fromJson(data));
+      }
+    }
+    return productsList;
   }
 }
