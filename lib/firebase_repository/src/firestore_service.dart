@@ -66,7 +66,7 @@ class FirestoreService {
   submitNewProduct({required ProductEntity product}) async {
     try {
       String phoneNumber = AuthService().getPhoneNumber() ?? "";
-      var res = await _instance.collection("productsReview").add(
+      var res = await _instance.collection("products").add(
             product.toJson(),
           );
       print(" firestore res: ${res.path}");

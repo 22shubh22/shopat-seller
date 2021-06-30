@@ -404,6 +404,7 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                                       AuthService().getUserId() ?? "",
                                       _desc1.text,
                                       _desc2.text,
+                                      // TODO: image upload feature
                                       "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
                                       int.parse(_price.text),
                                       0,
@@ -477,10 +478,10 @@ class TagService {
   static Future<List<Tag>> getTags(String query) async {
     await Future.delayed(Duration(milliseconds: 500), null);
     return <Tag>[
-      Tag(name: 'Tag One'),
-      Tag(name: 'Tag Two'),
-      Tag(name: 'Tag Three'),
-      Tag(name: 'Tag Four'),
+      Tag(name: 'kirana'),
+      Tag(name: 'clothing'),
+      Tag(name: 'shoes'),
+      Tag(name: 'bakery'),
     ]
         .where((lang) => lang.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
