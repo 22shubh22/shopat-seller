@@ -4,6 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shopat_seller/firebase_repository/auth.dart';
+import 'package:shopat_seller/firebase_repository/src/entities/order_request_entity.dart';
 import 'package:shopat_seller/firebase_repository/src/entities/product_entity.dart';
 import 'package:path/path.dart';
 
@@ -144,8 +145,15 @@ class FirestoreService {
     return productsList;
   }
 
-  getProductsRequest() {
-
-    
+  Future<List<OrderReuestEntity>> getProductsRequest() async {
+    String phoneNumber = AuthService().getPhoneNumber() ?? "";
+    var productsReqData =
+        await _instance.collection('sellers').doc(phoneNumber).get();
+    List productsRequested = productsReqData.data()?['productsRequested'];
+    List<OrderReuestEntity> orderRequests = [];
+    for (var i in productsRequested) {
+      orderRequests.add(OrderReuestEntity.fromJson(i));
+    }
+    return orderRequests;
   }
 }

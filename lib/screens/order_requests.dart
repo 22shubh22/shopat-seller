@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:shopat_seller/firebase_repository/src/entities/order_request_entity.dart';
+import 'package:shopat_seller/firebase_repository/src/firestore_service.dart';
 import 'package:shopat_seller/global/colors.dart';
 
 class OrderRequests extends StatefulWidget {
@@ -11,7 +14,18 @@ class OrderRequests extends StatefulWidget {
 class _OrderRequestsState extends State<OrderRequests> {
   bool _isLoading = false;
 
-  Future<void> getYourSubmissions() async {}
+  List<OrderReuestEntity> _orderRequests = [];
+
+  Future<void> getYourSubmissions() async {
+    _orderRequests = await FirestoreService().getProductsRequest();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getYourSubmissions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +84,10 @@ class _OrderRequestsState extends State<OrderRequests> {
                             color: Colors.black,
                             onRefresh: getYourSubmissions,
                             child: ListView.builder(
-                                itemCount: 4,
+                                itemCount: _orderRequests.length,
                                 itemBuilder: (context, index) {
+                                  OrderReuestEntity _order =
+                                      _orderRequests[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: Container(
@@ -97,7 +113,7 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Cotton Saree + 3 items ",
+                                                  "${_order.productInfo[0].productName} ${_order.productInfo.length > 1 ? "+ ${_order.productInfo.length - 1} items" : ""}",
                                                   style: TextStyle(
                                                     fontFamily: "Poppins",
                                                     fontSize: 18.0,
@@ -129,7 +145,9 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                 //   ),
                                                 // ),
                                                 Text(
-                                                  "July 7, 2021 01:11 PM",
+                                                  DateFormat('yMMMd').format(
+                                                      DateTime.parse(
+                                                          '${_order.createdAt}')),
                                                   maxLines: 2,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -148,7 +166,8 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "₹ " + "6229/-",
+                                                      "₹ " +
+                                                          "${_order.productInfo[0].costPrice}/-",
                                                       style: TextStyle(
                                                         fontFamily: "Poppins",
                                                         fontSize: 16.0,
@@ -158,7 +177,7 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                     ),
                                                     SizedBox(width: 48.0),
                                                     Text(
-                                                      "Recieved By Admin",
+                                                      "${_order.status}",
                                                       style: TextStyle(
                                                           fontFamily: "Poppins",
                                                           fontSize: 14.0,
