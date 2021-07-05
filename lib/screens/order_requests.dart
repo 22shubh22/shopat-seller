@@ -79,9 +79,6 @@ class _OrderRequestsState extends State<OrderRequests> {
                       ),
                     ),
                   )
-
-               
-
                 : _orderRequests.length > 0
                     ? Expanded(
                         child: Column(
@@ -98,6 +95,11 @@ class _OrderRequestsState extends State<OrderRequests> {
                                     itemBuilder: (context, index) {
                                       OrderRequestEntity _order =
                                           _orderRequests[index];
+                                      int billAmt = 0;
+                                      for (var i in _order.productInfo) {
+                                        billAmt +=
+                                            (i.sellingPrice * i.numberOfItems);
+                                      }
                                       return InkWell(
                                         onTap: () {
                                           Navigator.push(
@@ -148,7 +150,6 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         ),
-
                                                       ),
                                                       SizedBox(height: 6.0),
                                                       // Text(
@@ -199,7 +200,7 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                         children: [
                                                           Text(
                                                             "₹ " +
-                                                                "${_order.productInfo[0].costPrice}/-",
+                                                                "$billAmt /-",
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   "Poppins",
