@@ -119,58 +119,63 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           height: 24.0,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 26.0),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 8.0,
+                        (shopName.length > 1 || shopAddress.length > 1)
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 26.0),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
                                   ),
-                                  Icon(
-                                    FeatherIcons.mapPin,
-                                    size: 32.0,
-                                  ),
-                                  SizedBox(
-                                    height: 16.0,
-                                  ),
-                                  Text(
-                                    "$shopName",
-                                    style: TextStyle(
-                                      fontFamily: "Poppins",
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        Icon(
+                                          FeatherIcons.mapPin,
+                                          size: 32.0,
+                                        ),
+                                        SizedBox(
+                                          height: 16.0,
+                                        ),
+                                        Text(
+                                          "$shopName",
+                                          style: TextStyle(
+                                            fontFamily: "Poppins",
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.80,
+                                          child: Text(
+                                            "$shopAddress",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Poppins",
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color(0xFF393D46),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                      ],
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
-                                  SizedBox(height: 8.0),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.80,
-                                    child: Text(
-                                      "$shopAddress",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: "Poppins",
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFF393D46),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8.0,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                                ),
+                              )
+                            : Container(),
                         SizedBox(
                           height: 24.0,
                         ),

@@ -292,6 +292,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
                     ],
                   ),
                 ),
