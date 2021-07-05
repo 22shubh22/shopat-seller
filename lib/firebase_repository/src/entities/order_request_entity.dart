@@ -1,22 +1,22 @@
-class OrderReuestEntity {
+class OrderRequestEntity {
   String createdAt;
   CustomerDetails customerDetails;
   List<ProductInfo> productInfo;
   String status;
 
-  OrderReuestEntity(
+  OrderRequestEntity(
       {required this.createdAt,
       required this.customerDetails,
       required this.productInfo,
       required this.status});
 
-  factory OrderReuestEntity.fromJson(Map<String, dynamic> json) {
+  factory OrderRequestEntity.fromJson(Map<String, dynamic> json) {
     List<ProductInfo> productInfo = [];
     json['productInfo'].forEach((v) {
       productInfo.add(new ProductInfo.fromJson(v));
     });
 
-    return OrderReuestEntity(
+    return OrderRequestEntity(
         createdAt: json['createdAt'].toString(),
         customerDetails: CustomerDetails.fromJson(json['customerDetails']),
         productInfo: productInfo,

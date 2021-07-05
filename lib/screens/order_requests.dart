@@ -14,7 +14,7 @@ class OrderRequests extends StatefulWidget {
 class _OrderRequestsState extends State<OrderRequests> {
   bool _isLoading = false;
 
-  List<OrderReuestEntity> _orderRequests = [];
+  List<OrderRequestEntity> _orderRequests = [];
 
   Future<void> getYourSubmissions() async {
     _orderRequests = await FirestoreService().getProductsRequest();
@@ -86,7 +86,7 @@ class _OrderRequestsState extends State<OrderRequests> {
                             child: ListView.builder(
                                 itemCount: _orderRequests.length,
                                 itemBuilder: (context, index) {
-                                  OrderReuestEntity _order =
+                                  OrderRequestEntity _order =
                                       _orderRequests[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
