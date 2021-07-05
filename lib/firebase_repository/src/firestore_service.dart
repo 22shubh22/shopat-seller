@@ -145,14 +145,17 @@ class FirestoreService {
     return productsList;
   }
 
-  Future<List<OrderReuestEntity>> getProductsRequest() async {
+  Future<List<OrderRequestEntity>> getProductsRequest() async {
     String phoneNumber = AuthService().getPhoneNumber() ?? "";
     var productsReqData =
         await _instance.collection('sellers').doc(phoneNumber).get();
     List productsRequested = productsReqData.data()?['productsRequested'];
-    List<OrderReuestEntity> orderRequests = [];
+    List<OrderRequestEntity> orderRequests = [];
     for (var i in productsRequested) {
-      orderRequests.add(OrderReuestEntity.fromJson(i));
+      var sData = await _instance.collection('ordersMasterList').doc(i).get();
+
+      orderRequests.add(
+          OrderRequestEntity.fromJson(sData.data()?['order'][phoneNumber]));
     }
     return orderRequests;
   }
