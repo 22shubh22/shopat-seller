@@ -422,39 +422,44 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
                                   _desc1.text.length > 0 &&
                                   _desc2.text.length > 0 &&
                                   _price.text.length > 0 &&
-                                  _quantity.text.length > 0 &&
-                                  int.parse(_quantity.text) <= 20) {
-                                String imageUrl = "";
-                                if (_imageFile.path.length > 1) {
-                                  imageUrl =
-                                      await FirestoreService().uploadImage(
-                                    file: _imageFile,
-                                  );
+                                  _quantity.text.length > 0) {
+                                if (int.parse(_quantity.text) > 20) {
+                                  BotToast.showText(
+                                      text:
+                                          'Quantity cannot be greater than 20');
                                 } else {
-                                  imageUrl =
-                                      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
-                                }
+                                  String imageUrl = "";
+                                  if (_imageFile.path.length > 1) {
+                                    imageUrl =
+                                        await FirestoreService().uploadImage(
+                                      file: _imageFile,
+                                    );
+                                  } else {
+                                    imageUrl =
+                                        "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80";
+                                  }
 
-                                var result =
-                                    await FirestoreService().submitNewProduct(
-                                  product: ProductEntity(
-                                    "",
-                                    _name.text,
-                                    AuthService().getUserId() ?? "",
-                                    _desc1.text,
-                                    _desc2.text,
-                                    imageUrl,
-                                    int.parse(_price.text),
-                                    0,
-                                    int.parse(_quantity.text),
-                                    _tagsListGoingtToDb,
-                                    AuthService().getPhoneNumber() ?? "",
-                                    DateTime.now().toString(),
-                                    "Pending",
-                                  ),
-                                );
-                                if (result['res'] == true) {
-                                  Navigator.pop(context);
+                                  var result =
+                                      await FirestoreService().submitNewProduct(
+                                    product: ProductEntity(
+                                      "",
+                                      _name.text,
+                                      AuthService().getUserId() ?? "",
+                                      _desc1.text,
+                                      _desc2.text,
+                                      imageUrl,
+                                      int.parse(_price.text),
+                                      0,
+                                      int.parse(_quantity.text),
+                                      _tagsListGoingtToDb,
+                                      AuthService().getPhoneNumber() ?? "",
+                                      DateTime.now().toString(),
+                                      "Pending",
+                                    ),
+                                  );
+                                  if (result['res'] == true) {
+                                    Navigator.pop(context);
+                                  }
                                 }
                               } else {
                                 BotToast.showText(
