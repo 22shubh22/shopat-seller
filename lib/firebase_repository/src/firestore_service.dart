@@ -153,10 +153,38 @@ class FirestoreService {
     List<OrderRequestEntity> orderRequests = [];
     for (var i in productsRequested) {
       var sData = await _instance.collection('ordersMasterList').doc(i).get();
+      OrderRequestEntity temp =
+          OrderRequestEntity.fromJson(sData.data()?['order'][phoneNumber]);
 
-      orderRequests.add(
-          OrderRequestEntity.fromJson(sData.data()?['order'][phoneNumber]));
+      temp.orderId = i;
+
+      orderRequests.add(temp);
     }
     return orderRequests;
+  }
+
+  updateOrderStatus({
+    String? orderId,
+    String? status,
+  }) async {
+    print(status);
+    try {
+      String phoneNumber = AuthService().getPhoneNumber() ?? "";
+      var temp =
+          await _instance.collection("ordersMasterList").doc(orderId).get();
+      Map<String, dynamic> tempMap = temp.data() ?? {};
+      print("Hello");
+      print(status);
+      print(tempMap['order'][phoneNumber]['status']);
+      tempMap['order'][phoneNumber]['status'] = status;
+
+      await _instance.collection("ordersMasterList").doc(orderId).set(tempMap);
+      BotToast.showText(text: 'Status Updated');
+      return {'res': true, 'message': 'Status Updated'};
+    } catch (e) {
+      print(" error while Updating the Status: $e");
+      BotToast.showText(text: 'Cannot update the Status');
+      return {'res': false, 'message': 'Cannot update the Status'};
+    }
   }
 }

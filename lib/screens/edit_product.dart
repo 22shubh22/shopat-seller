@@ -28,7 +28,7 @@ class _EditProductPageState extends State<EditProductPage> {
 
   bool _isSubmitLoading = false;
   String _selectedValuesJson = 'Nothing to show';
-  late final List<Tag> _selectedTags;
+  late final List<Tag> _selectedTags = [];
   late List<String> _tagsListGoingtToDb = [];
   File _imageFile = File("");
 
@@ -51,7 +51,10 @@ class _EditProductPageState extends State<EditProductPage> {
     _desc2.text = widget.product.description2;
     _quantity.text = widget.product.quantityAvailable.toString();
     _price.text = widget.product.costPrice.toString();
-    _selectedTags = [];
+    for (var i in widget.product.tags) {
+      _selectedTags.add(Tag(name: i));
+    }
+    //_selectedTags = [];
   }
 
   @override
@@ -75,7 +78,7 @@ class _EditProductPageState extends State<EditProductPage> {
                   icon: Icon(FeatherIcons.arrowLeft),
                 ),
                 Text(
-                  "Add a new product",
+                  "Edit a product",
                   style: TextStyle(
                     fontFamily: "Poppins",
                     fontSize: 16.0,

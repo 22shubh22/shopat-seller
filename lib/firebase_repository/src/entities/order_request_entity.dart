@@ -3,12 +3,15 @@ class OrderRequestEntity {
   CustomerDetails customerDetails;
   List<ProductInfo> productInfo;
   String status;
+  String? orderId;
 
-  OrderRequestEntity(
-      {required this.createdAt,
-      required this.customerDetails,
-      required this.productInfo,
-      required this.status});
+  OrderRequestEntity({
+    required this.createdAt,
+    required this.customerDetails,
+    required this.productInfo,
+    required this.status,
+    this.orderId,
+  });
 
   factory OrderRequestEntity.fromJson(Map<String, dynamic> json) {
     List<ProductInfo> productInfo = [];

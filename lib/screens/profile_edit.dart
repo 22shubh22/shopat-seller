@@ -238,25 +238,37 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       Center(
                         child: InkWell(
                           onTap: () async {
-                            if (_nameController.text.length > 0 &&
-                                _shopNameController.text.length > 0 &&
-                                _shopAddressController.text.length > 0) {
-                              setState(() {
-                                _isUpdating = true;
-                              });
-                              await FirestoreService().updateProfileDetails(
-                                name: _nameController.text,
-                                shopName: _shopNameController.text,
-                                shopAddress: _shopAddressController.text,
-                              );
-                              setState(() {
-                                _isUpdating = false;
-                              });
-                              Navigator.of(context).pop('success');
-                            } else {
-                              BotToast.showText(
-                                  text: "Please enter all the details");
-                            }
+                            // if (_nameController.text.length > 0 &&
+                            //     _shopNameController.text.length > 0 &&
+                            //     _shopAddressController.text.length > 0) {
+                            //   setState(() {
+                            //     _isUpdating = true;
+                            //   });
+                            //   await FirestoreService().updateProfileDetails(
+                            //     name: _nameController.text,
+                            //     shopName: _shopNameController.text,
+                            //     shopAddress: _shopAddressController.text,
+                            //   );
+                            //   setState(() {
+                            //     _isUpdating = false;
+                            //   });
+                            //   Navigator.of(context).pop('success');
+                            // } else {
+                            //   BotToast.showText(
+                            //       text: "Please enter all the details");
+                            // }
+                            setState(() {
+                              _isUpdating = true;
+                            });
+                            await FirestoreService().updateProfileDetails(
+                              name: _nameController.text,
+                              shopName: _shopNameController.text,
+                              shopAddress: _shopAddressController.text,
+                            );
+                            setState(() {
+                              _isUpdating = false;
+                            });
+                            Navigator.of(context).pop('success');
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 15),
