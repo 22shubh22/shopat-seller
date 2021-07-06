@@ -17,7 +17,7 @@ class _OrderRequestsState extends State<OrderRequests> {
 
   List<OrderRequestEntity> _orderRequests = [];
 
-  Future<void> getYourSubmissions() async {
+  Future<void> getOrderRequests() async {
     setState(() {
       _isLoading = true;
     });
@@ -30,7 +30,7 @@ class _OrderRequestsState extends State<OrderRequests> {
   @override
   void initState() {
     super.initState();
-    getYourSubmissions();
+    getOrderRequests();
   }
 
   @override
@@ -89,7 +89,7 @@ class _OrderRequestsState extends State<OrderRequests> {
                             Expanded(
                               child: RefreshIndicator(
                                 color: Colors.black,
-                                onRefresh: getYourSubmissions,
+                                onRefresh: getOrderRequests,
                                 child: ListView.builder(
                                     itemCount: _orderRequests.length,
                                     itemBuilder: (context, index) {
@@ -101,8 +101,8 @@ class _OrderRequestsState extends State<OrderRequests> {
                                             (i.sellingPrice * i.numberOfItems);
                                       }
                                       return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
+                                        onTap: () async {
+                                          var res = await Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
@@ -112,9 +112,13 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                     .format(DateTime.parse(
                                                         '${_order.createdAt}')),
                                                 status: _order.status,
+                                                orderId: _order.orderId,
                                               ),
                                             ),
                                           );
+                                          if (res == "success") {
+                                            getOrderRequests();
+                                          }
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(
@@ -176,9 +180,26 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                       //   ),
                                                       // ),
                                                       Text(
-                                                        DateFormat('yMMMd').format(
-                                                            DateTime.parse(
+                                                        DateFormat('yMMMd')
+                                                            .add_Hm()
+                                                            .format(DateTime.parse(
                                                                 '${_order.createdAt}')),
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          fontFamily: "Poppins",
+                                                          fontSize: 14.0,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.black
+                                                              .withOpacity(
+                                                                  0.60),
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 6.0),
+                                                      Text(
+                                                        "Order Id :  ${_order.orderId}",
                                                         maxLines: 2,
                                                         overflow: TextOverflow
                                                             .ellipsis,
@@ -220,8 +241,13 @@ class _OrderRequestsState extends State<OrderRequests> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400,
-                                                                color: Color(
-                                                                    0XFF10C600)),
+                                                                color: _order
+                                                                            .status ==
+                                                                        "Pending"
+                                                                    ? Color(
+                                                                        0XFFFF8413)
+                                                                    : Color(
+                                                                        0XFF10C600)),
                                                           ),
                                                         ],
                                                       )
