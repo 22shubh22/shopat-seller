@@ -96,50 +96,53 @@ class _SellerLoginState extends State<SellerLogin> {
             SizedBox(
               height: 5.0,
             ),
-            LoginTextField(
-              controller: _phoneCont,
-              hint: "Eg: 9876543210",
-              textInputType: TextInputType.number,
-              trailingActionWidget: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: _isOtpSending
-                    ? Text(
-                        'Sending .....',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16.0,
-                          color: Colors.black,
-                        ),
-                      )
-                    : InkWell(
-                        onTap: () async {
-                          if (_phoneCont.text.trim().length == 10) {
-                            print("I am here00");
-                            setState(() {
-                              _isOtpSending = true;
-                            });
-                            await verifyPhone("+91" + _phoneCont.text);
-                            print("I am here00");
-                            setState(() {
-                              _isOtpSending = false;
-                            });
-                          } else {
-                            BotToast.showText(
-                                text: "Mobile number should be 10 digits");
-                          }
-                        },
-                        child: Text(
-                          'Send OTP',
+            Row(
+              children: [
+                Expanded(
+                  child: LoginTextField(
+                    controller: _phoneCont,
+                    hint: "Eg: 9876543210",
+                    textInputType: TextInputType.number,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  child: _isOtpSending
+                      ? Text(
+                          'Sending ....',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                             fontSize: 16.0,
                             color: Colors.black,
                           ),
+                        )
+                      : InkWell(
+                          onTap: () async {
+                            if (_phoneCont.text.trim().length == 10) {
+                              print("I am here00");
+                              setState(() {
+                                _isOtpSending = true;
+                              });
+                              await verifyPhone("+91" + _phoneCont.text);
+                              print("I am here00");
+                            } else {
+                              BotToast.showText(
+                                  text: "Mobile number should be 10 digits");
+                            }
+                          },
+                          child: Text(
+                            'Send OTP',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
-                      ),
-              ),
+                ),
+              ],
             ),
             SizedBox(
               height: 12.0,
@@ -250,6 +253,7 @@ class _SellerLoginState extends State<SellerLogin> {
                               }
                             });
                           } catch (e) {
+                            print(" error is  : $e");
                             BotToast.showText(text: "Invalid OTP");
                           }
                           setState(() {
@@ -290,6 +294,9 @@ class _SellerLoginState extends State<SellerLogin> {
     final PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException authException) {
       print('${authException.message}');
+      setState(() {
+        _isOtpSending = false;
+      });
       BotToast.showText(text: '${authException.message}');
     };
 
@@ -297,6 +304,7 @@ class _SellerLoginState extends State<SellerLogin> {
       setState(() {
         this.codeSent = true;
         verificationId = verId;
+        _isOtpSending = false;
       });
       BotToast.showText(text: "OTP sent succesfully");
     };
