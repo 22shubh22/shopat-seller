@@ -38,7 +38,7 @@ class _SellerHomeState extends State<SellerHome> {
                         Column(
                           children: [
                             Text(
-                              "Shop At",
+                              "Bilaspur Stores",
                               style: TextStyle(
                                 fontFamily: "Righteous",
                                 fontWeight: FontWeight.w400,

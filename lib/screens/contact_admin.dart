@@ -11,7 +11,7 @@ class ContactAdmin extends StatefulWidget {
 }
 
 class _ContactAdminState extends State<ContactAdmin> {
-  String mobile = "9032134375";
+  String mobile = "9669068480";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class _ContactAdminState extends State<ContactAdmin> {
                   Container(
                     alignment: Alignment.center,
                     child: Text(
-                      'Veere Badra',
+                      'Om Sonkar',
                       style: TextStyle(
                         color: Colors.black,
                         fontFamily: "Poppins",
