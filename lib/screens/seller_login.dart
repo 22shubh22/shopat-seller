@@ -57,7 +57,7 @@ class _SellerLoginState extends State<SellerLogin> {
                 );
               },
               child: Text(
-                'Shop At',
+                'Bilaspur Stores',
                 style: GoogleFonts.righteous(
                   textStyle: TextStyle(
                     fontSize: 40.0,
@@ -96,19 +96,19 @@ class _SellerLoginState extends State<SellerLogin> {
             SizedBox(
               height: 5.0,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: LoginTextField(
-                    controller: _phoneCont,
-                    hint: "Eg: 9876543210",
-                    textInputType: TextInputType.number,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 12.0),
-                  child: _isOtpSending
-                      ? Text(
+            LoginTextField(
+              controller: _phoneCont,
+              hint: "Eg: 9876543210",
+              textInputType: TextInputType.number,
+              trailingActionWidget: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: _isOtpSending
+                    ? InkWell(
+                        onTap: () {
+                          BotToast.showText(
+                              text: "Please wait while we send OTP");
+                        },
+                        child: Text(
                           'Sending ....',
                           style: TextStyle(
                             fontFamily: 'Poppins',
@@ -116,33 +116,33 @@ class _SellerLoginState extends State<SellerLogin> {
                             fontSize: 16.0,
                             color: Colors.black,
                           ),
-                        )
-                      : InkWell(
-                          onTap: () async {
-                            if (_phoneCont.text.trim().length == 10) {
-                              print("I am here00");
-                              setState(() {
-                                _isOtpSending = true;
-                              });
-                              await verifyPhone("+91" + _phoneCont.text);
-                              print("I am here00");
-                            } else {
-                              BotToast.showText(
-                                  text: "Mobile number should be 10 digits");
-                            }
-                          },
-                          child: Text(
-                            'Send OTP',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () async {
+                          if (_phoneCont.text.trim().length == 10) {
+                            print("I am here00");
+                            setState(() {
+                              _isOtpSending = true;
+                            });
+                            await verifyPhone("+91" + _phoneCont.text);
+                            print("I am here00");
+                          } else {
+                            BotToast.showText(
+                                text: "Mobile number should be 10 digits");
+                          }
+                        },
+                        child: Text(
+                          'Send OTP',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.0,
+                            color: Colors.black,
                           ),
                         ),
-                ),
-              ],
+                      ),
+              ),
             ),
             SizedBox(
               height: 12.0,
