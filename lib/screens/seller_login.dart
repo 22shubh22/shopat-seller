@@ -233,29 +233,44 @@ class _SellerLoginState extends State<SellerLogin> {
                           setState(() {
                             _isLoginLoading = true;
                           });
-                          try {
-                            await FirebaseAuth.instance
-                                .signInWithCredential(
-                                    PhoneAuthProvider.credential(
-                              verificationId: verificationId,
-                              smsCode: _passwordCont.text.trim(),
-                            ))
-                                .then((value) async {
-                              if (value.user != null) {
-                                await FirestoreService().getUserByPhone(
-                                    "+91" + _phoneCont.text,
-                                    AuthService().getUserId());
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SellerHome()),
-                                    (route) => false);
-                              }
-                            });
-                          } catch (e) {
-                            print(" error is  : $e");
-                            BotToast.showText(text: "Invalid OTP");
+
+                          if (AuthService().getUserId() != null) {
+                            await Future.delayed(
+                                Duration(seconds: 1, milliseconds: 500));
+                            await FirestoreService().getUserByPhone(
+                                "+91" + _phoneCont.text,
+                                AuthService().getUserId());
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SellerHome()),
+                                (route) => false);
+                          } else {
+                            try {
+                              await FirebaseAuth.instance
+                                  .signInWithCredential(
+                                      PhoneAuthProvider.credential(
+                                verificationId: verificationId,
+                                smsCode: _passwordCont.text.trim(),
+                              ))
+                                  .then((value) async {
+                                if (value.user != null) {
+                                  await FirestoreService().getUserByPhone(
+                                      "+91" + _phoneCont.text,
+                                      AuthService().getUserId());
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SellerHome()),
+                                      (route) => false);
+                                }
+                              });
+                            } catch (e) {
+                              print(" error is  : $e");
+                              BotToast.showText(text: "Invalid OTP");
+                            }
                           }
+
                           setState(() {
                             _isLoginLoading = false;
                           });
