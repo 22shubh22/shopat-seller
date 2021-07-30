@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "991330551936-bs4rbajhj8m7p79huvffb8aaugiia5st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.stores",
+            "certificate_hash": "62885e0001a6054eef397edd707417ed2c7cf235"
+          }
+        },
+        {
           "client_id": "991330551936-dglvuq32h2apdfue9m8tan43j794glc8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bilaspur.stores",
             "certificate_hash": "68b8e617000e4d50b99167813bf92a367ea75967"
+          }
+        },
+        {
+          "client_id": "991330551936-gc8k08kh1dk45kvb8nlpi2fodbhhplh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.stores",
+            "certificate_hash": "05f51912bb23c1553e6a2386d6dbbc7163896cb9"
           }
         },
         {
@@ -58,6 +74,46 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "991330551936-1a2i9kn8kcaedr0230qaf0vvbo2365p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.storeseller",
+            "certificate_hash": "05f51912bb23c1553e6a2386d6dbbc7163896cb9"
+          }
+        },
+        {
+          "client_id": "991330551936-2n3v6ufmtg7to8a1aj4t878sjf526ib4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.storeseller",
+            "certificate_hash": "7ebba7a8581cb54929e0c67853a5e7883d9d5441"
+          }
+        },
+        {
+          "client_id": "991330551936-7ovkukst68ki1a8fl8a3nvdkpjlbgqq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.storeseller",
+            "certificate_hash": "68b8e617000e4d50b99167813bf92a367ea75967"
+          }
+        },
+        {
+          "client_id": "991330551936-ocprgsujems6tce7si26b8jop9bk26bi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.storeseller",
+            "certificate_hash": "a113f140189cedb2209fa6471bc6c099a3e101fc"
+          }
+        },
+        {
+          "client_id": "991330551936-q7hjlpvshjoqfv4lra42b3o5l7j7i6qo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bilaspur.storeseller",
+            "certificate_hash": "62885e0001a6054eef397edd707417ed2c7cf235"
+          }
+        },
         {
           "client_id": "991330551936-1usc0imjeiqjatlsfk976j0bgqq4q35m.apps.googleusercontent.com",
           "client_type": 3
